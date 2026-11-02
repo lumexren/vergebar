@@ -1,0 +1,71 @@
+{
+  // vergebar - Waybar-compatible configuration
+  "layer": "top",
+  "position": "top",
+  "margin-top": 4,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 4,
+
+  "modules-left": [
+    "workspaces",
+    "cpu",
+    "memory",
+    "disk"
+  ],
+
+  "modules-center": [
+    "clock"
+  ],
+
+  "modules-right": [
+    "network",
+    "temperature",
+    "custom/example"
+  ],
+
+  // Module Configurations
+  "clock": {
+    "format": "  %H:%M:%S ・   %a %b %d",
+    "interval": 1
+  },
+
+  "cpu": {
+    "interval": 1,
+    "format": "  {usage}% ・ {max_frequency:2}GHz",
+    "warning-threshold": 70,
+    "critical-threshold": 90
+  },
+
+  "memory": {
+    "interval": 2,
+    "format": "  {percentage}%",
+    "warning-threshold": 75,
+    "critical-threshold": 90
+  },
+
+  "disk": {
+    "path": "/",
+    "interval": 10,
+    "format": "  {percentage_used}%"
+  },
+
+  "network": {
+    "interval": 2,
+    "format": "󰤨  {ifname} ({ipaddr})"
+  },
+
+  "temperature": {
+    "interval": 2,
+    "format": "  {temperature_c}°C",
+    "warning-threshold": 75,
+    "critical-threshold": 85
+  },
+
+  "custom/example": {
+    "exec": "echo '{\"text\": \"🚀 vergebar\", \"tooltip\": \"Zig GTK4 Status Bar\"}'",
+    "return-type": "json",
+    "interval": 5,
+    "on-click": "notify-send 'vergebar' 'Clicked!'"
+  }
+}

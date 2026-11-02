@@ -1,0 +1,222 @@
+/* vergebar Standalone Default CSS */
+
+* {
+  font-family: 'JetBrains Mono Nerd Font', 'Font Awesome 6 Free', 'Noto Sans', sans-serif;
+  font-weight: 600;
+  font-size: 11px;
+  border: none;
+  min-height: 0;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+}
+
+button {
+  min-height: 0;
+  min-width: 0;
+  padding: 0 4px;
+  margin: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+window#waybar, window#vergebar, .vergebar {
+  background-color: rgba(24, 24, 37, 0.94);
+  border-radius: 10px;
+  color: #cdd6f4;
+  padding: 2px 6px;
+  margin: 0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+tooltip {
+  background-color: #181825;
+  color: #cdd6f4;
+  border: 1px solid #313244;
+  border-radius: 8px;
+  padding: 4px 8px;
+  font-size: 11px;
+}
+
+/* Module Common Styling */
+.module {
+  padding: 0 6px;
+  margin: 1px 2px;
+  border-radius: 6px;
+  background-color: #1e1e2e;
+  color: #cdd6f4;
+  min-height: 0;
+  font-size: 11px;
+  transition: all 0.15s ease-in-out;
+}
+
+.module:hover {
+  background-color: #313244;
+}
+
+/* Workspaces */
+#workspaces {
+  margin-right: 4px;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  margin: 1px 1px;
+  border-radius: 5px;
+  background-color: transparent;
+  color: #a6adc8;
+  opacity: 0.7;
+  font-size: 11px;
+  min-height: 0;
+  min-width: 0;
+  transition: all 0.15s ease;
+}
+
+#workspaces button:hover {
+  background-color: #313244;
+  color: #89b4fa;
+  opacity: 1;
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+  background-color: #89b4fa;
+  color: #11111b;
+  opacity: 1;
+  font-weight: 800;
+}
+
+#workspaces button.urgent {
+  background-color: #f38ba8;
+  color: #11111b;
+  opacity: 1;
+}
+
+/* Window Title */
+#window {
+  color: #cdd6f4;
+  background-color: transparent;
+  font-weight: 600;
+  padding: 0 4px;
+}
+
+/* Center Clock */
+#clock {
+  color: #fab387;
+  font-weight: 700;
+}
+
+/* System Stats */
+#cpu {
+  color: #f38ba8;
+}
+
+#memory {
+  color: #a6e3a1;
+}
+
+#network {
+  color: #b4befe;
+}
+
+#network.disconnected {
+  color: #6c7086;
+}
+
+/* WirePlumber */
+#wireplumber {
+  color: #f9e2af;
+}
+
+#wireplumber.muted {
+  color: #6c7086;
+  background-color: rgba(49, 50, 68, 0.5);
+}
+
+/* MPRIS Media */
+#mpris {
+  color: #89dceb;
+}
+
+#mpris.playing {
+  color: #a6e3a1;
+}
+
+#mpris.paused {
+  color: #6c7086;
+}
+
+/* Bluetooth */
+#bluetooth {
+  color: #89b4fa;
+}
+
+#bluetooth.connected {
+  color: #a6e3a1;
+}
+
+#bluetooth.disabled {
+  color: #6c7086;
+}
+
+/* System Tray */
+#tray {
+  padding: 0 4px;
+  margin: 1px 1px;
+}
+
+#tray button,
+#tray .tray-item {
+  padding: 0 2px;
+  margin: 0 1px;
+  min-height: 0;
+  min-width: 0;
+  background: transparent;
+  border-radius: 4px;
+  border: none;
+}
+
+#tray button:hover,
+#tray .tray-item:hover {
+  background-color: #313244;
+}
+
+#tray image {
+  padding: 0;
+  margin: 0;
+}
+
+/* Tray Popover Menu (DBusMenu) */
+popover.tray-menu,
+.tray-menu {
+  background-color: #181825;
+  border: 1px solid #313244;
+  border-radius: 8px;
+  padding: 4px;
+}
+
+.tray-menu .menu-item {
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #cdd6f4;
+  font-size: 11px;
+  min-height: 0;
+  transition: all 0.15s ease;
+}
+
+.tray-menu .menu-item:hover {
+  background-color: #313244;
+  color: #89b4fa;
+}
+
+.tray-menu .menu-item:disabled {
+  color: #6c7086;
+  opacity: 0.6;
+}
+
+.tray-menu .menu-separator {
+  margin: 3px 0;
+  background-color: #313244;
+  min-height: 1px;
+}

@@ -1,0 +1,94 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 26,
+  "spacing": 4,
+  "reload_style_on_change": true,
+  "margin-top": 2,
+  "margin-left": 6,
+  "margin-right": 6,
+  "modules-left": [
+    "workspaces",
+    "window"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "cpu",
+    "memory",
+    "network",
+    "wireplumber",
+    "mpris",
+    "bluetooth",
+    "tray"
+  ],
+  "workspaces": {
+    "format": "{name}",
+    "on-click": "activate",
+    "sort-by-number": true
+  },
+  "window": {
+    "format": "{title}",
+    "max-length": 40
+  },
+  "clock": {
+    "format": " {:%H:%M:%S ・ %Y-%m-%d}",
+    "interval": 1,
+    "tooltip-format": "{:%A, %B %d, %Y}"
+  },
+  "cpu": {
+    "format": " {usage}%",
+    "interval": 2
+  },
+  "memory": {
+    "format": " {percentage}%",
+    "interval": 2
+  },
+  "network": {
+    "format": "{icon} {bandwidthTotalBytes}",
+    "format-disconnected": "󰤮 Disconnected",
+    "format-icons": {
+      "ethernet": "",
+      "linked": "",
+      "wifi": "",
+      "disconnected": "󰤮"
+    },
+    "interval": 1,
+    "tooltip-format": "IF: {ifname}\nIP: {ipaddr}\nGW: {gwaddr}\n {bandwidthDownBytes}  {bandwidthUpBytes}"
+  },
+  "wireplumber": {
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "format-icons": {
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    },
+    "scroll-step": 5,
+    "max-volume": 150,
+    "on-click": "pavucontrol"
+  },
+  "mpris": {
+    "format": "{status_icon} {title}",
+    "format-stopped": "",
+    "status-icons": {
+      "playing": "",
+      "paused": ""
+    },
+    "max-length": 35
+  },
+  "bluetooth": {
+    "format": "",
+    "format-connected": " {device_alias}",
+    "format-connected-battery": " {device_alias} ・ {device_battery_percentage}%",
+    "format-disabled": "",
+    "on-click": "blueman-manager"
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  }
+}

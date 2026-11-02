@@ -1,0 +1,13 @@
+.{
+    .name = .vergebar,
+    .version = "1.0.0",
+    .fingerprint = 0x3e2d71228f82a822,
+    .minimum_zig_version = "0.18.0-dev.4+5a23bf4b2",
+    .dependencies = .{
+        .plume = .{
+            .url = "https://github.com/lumexren/plume/archive/2.0.0.tar.gz",
+            .hash = "plume-2.0.0-K6ts5KHpAwB60dq7N930vpI6W4zmxpDdymhRMzepZlK0",
+        },
+    },
+    .paths = .{ "build.zig", "build.zig.zon", "src", "README.md", "LICENSE", "examples" },
+}

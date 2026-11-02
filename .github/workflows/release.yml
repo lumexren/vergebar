@@ -1,0 +1,137 @@
+name: Release
+
+permissions:
+  contents: write
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      release_filename: ${{ steps.package.outputs.release_filename }}
+      debug_filename: ${{ steps.package.outputs.debug_filename }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-4-dev libglib2.0-dev libwayland-dev wayland-protocols meson ninja-build pkg-config build-essential zip curl
+          git clone --depth 1 https://github.com/wmww/gtk4-layer-shell.git
+          meson setup gtk4-layer-shell/build gtk4-layer-shell --prefix=/usr -Dexamples=false -Dtests=false -Dintrospection=false -Dvapi=false
+          sudo ninja -C gtk4-layer-shell/build install
+          sudo ldconfig
+
+      - name: Read Zig Version
+        id: zig_version
+        run: echo "version=$(tr -d ' \n\r' < .zigversion)" >> "$GITHUB_OUTPUT"
+
+      - name: Install Zig
+        uses: mlugg/setup-zig@v2
+        with:
+          version: ${{ steps.zig_version.outputs.version }}
+
+      - name: Run Tests
+        run: zig build test
+
+      - name: Build debug
+        run: |
+          zig build
+          mv zig-out/bin zig-out-debug
+
+      - name: Build release
+        run: |
+          zig build -Doptimize=small
+          mv zig-out/bin zig-out-release
+
+      - name: Set Version
+        id: version
+        run: |
+          VERSION=$(grep -oP '\.version\s*=\s*"\K[0-9]+\.[0-9]+\.[0-9]+' build.zig.zon)
+          if [ -z "$VERSION" ]; then
+            echo "Error: Version not found in build.zig.zon"
+            exit 1
+          fi
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
+      - name: Create and Push Git Tag
+        env:
+          EMAIL: ${{ secrets.EMAIL }}
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          sed -i "s/\.version = \"[^\"]*\"/\.version = \"${VERSION}\"/" build.zig.zon
+
+          git config user.name "lumexren"
+          git config user.email "${EMAIL:-lumexren@users.noreply.github.com}"
+          git remote set-url origin "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git"
+
+          if ! git diff --quiet build.zig.zon; then
+            git commit -am "chore(release): release ${VERSION} [skip ci]"
+            git push origin "${GITHUB_REF_NAME}"
+          fi
+
+          if git rev-parse "$VERSION" >/dev/null 2>&1; then
+            echo "Tag $VERSION already exists, skipping."
+          else
+            git tag "$VERSION"
+            git push origin "$VERSION"
+          fi
+
+      - name: Generate Changelog
+        run: |
+          bash .github/scripts/generate-changelog.sh \
+            --mode stable \
+            --version "${{ steps.version.outputs.version }}" \
+            --output release_notes.md
+
+      - name: Package Builds
+        id: package
+        env:
+          VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          DEBUG_FILENAME="${{ github.event.repository.name }}-debug-${VERSION}.zip"
+          RELEASE_FILENAME="${{ github.event.repository.name }}-release-${VERSION}.zip"
+
+          (cd zig-out-debug && zip -r "../$DEBUG_FILENAME" .)
+          (cd zig-out-release && zip -r "../$RELEASE_FILENAME" .)
+
+          echo "debug_filename=$DEBUG_FILENAME" >> "$GITHUB_OUTPUT"
+          echo "release_filename=$RELEASE_FILENAME" >> "$GITHUB_OUTPUT"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: release-zips
+          path: |
+            ${{ steps.package.outputs.debug_filename }}
+            ${{ steps.package.outputs.release_filename }}
+            release_notes.md
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: release-zips
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ needs.build.outputs.version }}
+          name: ${{ needs.build.outputs.version }}
+          body_path: release_notes.md
+          prerelease: false
+          files: |
+            ${{ needs.build.outputs.debug_filename }}
+            ${{ needs.build.outputs.release_filename }}
