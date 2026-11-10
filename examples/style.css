@@ -1,0 +1,99 @@
+/* vergebar Catppuccin Mocha style */
+
+* {
+    font-family: 'JetBrains Mono Nerd Font', 'Font Awesome 6 Free', monospace;
+    font-size: 13px;
+    font-weight: bold;
+    min-height: 0;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar, window#vergebar, .vergebar, .vlybar {
+    background: rgba(24, 24, 37, 0.92);
+    color: #cdd6f4;
+    border-bottom: 2px solid #313244;
+}
+
+.modules-left, .modules-center, .modules-right {
+    padding: 3px 6px;
+}
+
+.module {
+    background: #313244;
+    color: #cdd6f4;
+    padding: 3px 12px;
+    margin: 2px 4px;
+    border-radius: 12px;
+    transition: all 0.2s ease;
+}
+
+.module:hover {
+    background: #45475a;
+    color: #f5e0dc;
+}
+
+/* Specific module styles */
+#clock {
+    color: #89b4fa;
+}
+
+#cpu {
+    color: #f9e2af;
+}
+
+#memory {
+    color: #a6e3a1;
+}
+
+#disk {
+    color: #fab387;
+}
+
+#network {
+    color: #94e2d5;
+}
+
+#temperature {
+    color: #f38ba8;
+}
+
+/* State thresholds */
+.warning {
+    background: #fab387;
+    color: #11111b;
+}
+
+.critical {
+    background: #f38ba8;
+    color: #11111b;
+}
+
+/* Workspace buttons */
+#workspaces button, .workspace-button {
+    color: #6c7086;
+    padding: 2px 8px;
+    margin: 2px 2px;
+    border-radius: 8px;
+    background: transparent;
+    transition: all 0.2s ease;
+}
+
+#workspaces button:hover, .workspace-button:hover {
+    background: #313244;
+    color: #cdd6f4;
+}
+
+#workspaces button.active, .workspace-button.active {
+    background: #cba6f7;
+    color: #11111b;
+}
+
+/* Tooltip */
+tooltip {
+    background: #1e1e2e;
+    color: #cdd6f4;
+    border: 1px solid #45475a;
+    border-radius: 8px;
+    padding: 6px 10px;
+}

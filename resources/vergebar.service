@@ -1,0 +1,15 @@
+[Unit]
+Description=Vergebar Daemon Service
+Documentation=https://github.com/lumexren/vergebar
+PartOf=graphical-session.target
+After=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/vergebar
+ExecReload=/usr/bin/kill -SIGUSR2 $MAINPID
+Restart=on-failure
+RestartSec=3s
+
+[Install]
+WantedBy=graphical-session.target

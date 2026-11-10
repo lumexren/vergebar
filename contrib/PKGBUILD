@@ -1,0 +1,47 @@
+# Maintainer: lumexren <lumexren@gmail.com>
+pkgname=vergebar-git
+pkgver=0.1.0.r1.g623fa27
+pkgrel=1
+pkgdesc="High-performance, lightweight Wayland status bar written in Zig with native PipeWire binding"
+arch=('x86_64' 'aarch64')
+url="https://github.com/lumexren/vergebar"
+license=('GPL-3.0-only')
+depends=(
+    'gtk4'
+    'gtk4-layer-shell'
+    'pipewire'
+    'glib2'
+)
+makedepends=(
+    'git'
+    'zig'
+    'pkgconf'
+)
+provides=('vergebar')
+conflicts=('vergebar')
+source=("git+https://github.com/lumexren/vergebar.git")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd vergebar
+    git describe --long --tags --abbrev=7 2>/dev/null | sed 's/^v//;s/\([^-]*-g\)/r\1/;s/-/./g' ||
+    printf "0.1.0.r%s.g%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short=7 HEAD)"
+}
+
+build() {
+    cd vergebar
+    zig build -Doptimize=fast
+}
+
+package() {
+    cd vergebar
+    install -Dm755 zig-out/bin/vergebar "${pkgdir}/usr/bin/vergebar"
+    install -Dm644 resources/vergebar.service "${pkgdir}/usr/lib/systemd/user/vergebar.service"
+    install -Dm644 contrib/completions/vergebar.bash "${pkgdir}/usr/share/bash-completion/completions/vergebar"
+    install -Dm644 contrib/completions/vergebar.zsh "${pkgdir}/usr/share/zsh/site-functions/_vergebar"
+    install -Dm644 contrib/completions/vergebar.fish "${pkgdir}/usr/share/fish/vendor_completions.d/vergebar.fish"
+    install -Dm644 doc/vergebar.1 "${pkgdir}/usr/share/man/man1/vergebar.1"
+    install -Dm644 doc/vergebar.5 "${pkgdir}/usr/share/man/man5/vergebar.5"
+    install -Dm644 LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+    install -Dm644 README.md "${pkgdir}/usr/share/doc/${pkgname}/README.md"
+}

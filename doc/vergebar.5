@@ -1,0 +1,44 @@
+.TH VERGEBAR 5 "2026-11-10" "vergebar" "File Formats"
+.SH NAME
+vergebar \- configuration file format and options
+.SH DESCRIPTION
+\fBvergebar\fR configurations are written in JSON or JSON with Comments (JSONC). Files are loaded from \fI~/.config/vergebar/config.jsonc\fR, \fI~/.config/waybar/config.jsonc\fR, or via the \fB\-c\fR flag.
+.SH TOP-LEVEL PROPERTIES
+.TP
+\fBlayer\fR (string)
+Layer surface position: \fItop\fR, \fIbottom\fR, \fIoverlay\fR, or \fIbackground\fR. Default is \fItop\fR.
+.TP
+\fBposition\fR (string)
+Screen edge: \fItop\fR, \fIbottom\fR, \fIleft\fR, or \fIright\fR. Default is \fItop\fR.
+.TP
+\fBmode\fR (string)
+Bar display mode: \fIdock\fR (default) or \fIhide\fR (auto-hides bar until hovered by mouse).
+.TP
+\fBkeyboard-mode\fR (string)
+Wayland layer-shell keyboard grabbing mode: \fInone\fR (default), \fIexclusive\fR, or \fIon-demand\fR.
+.TP
+\fBheight\fR (integer)
+Bar height in pixels for horizontal bars.
+.TP
+\fBspacing\fR (integer)
+Spacing in pixels between module widgets.
+.TP
+\fBmodules-left\fR, \fBmodules-center\fR, \fBmodules-right\fR (array of strings)
+Ordered lists of module identifiers to place on the bar.
+.SH SUPPORTED MODULES
+.PP
+clock, cpu, memory, battery, network, disk, temperature, backlight, backlight/slider, pulseaudio/slider, wireplumber, bluetooth, gpu, updates, fan, ping, workspaces, window, wlr/taskbar, tray, cava, mpris, idle_inhibitor, power-profiles-daemon, upower, user, gamemode, systemd-failed-units, mpd, jack, weather, dnd, notifications, clipboard, keyboard-state, group, hyprland/*, sway/*, river/*, custom/*.
+.PP
+\fBbattery\fR supports aggregate mode with \fB"bat": "all"\fR and format tokens \fI{capacity}\fR, \fI{power}\fR (Watts), \fI{health}\fR (%), \fI{timeTo}\fR (HH:MM), and \fI{cycles}\fR.
+.PP
+\fBwireplumber\fR supports microphone input control when configured with \fB"source": true\fR or using module identifier \fBwireplumber#source\fR. Right-clicking the module opens an interactive audio sink device switcher popover.
+.PP
+\fBbluetooth\fR supports right-click popover displaying paired devices with one-click Connect / Disconnect and power toggling via BlueZ D-Bus.
+.PP
+\fBmpris\fR supports right-click mini media player popover displaying album artwork, track title, artist, album, progress bar, and playback controls.
+.PP
+\fBgroup\fR supports collapsible drawer mode with \fB"drawer": { "transition-duration": 500, "transition-left-to-right": true, "click-to-reveal": false, "start-expanded": false }\fR.
+.PP
+\fBkeyboard-state\fR supports active keyboard layout detection (\fI{layout}\fR, \fI{layout_full}\fR), click-to-cycle layout switching, and CapsLock / NumLock indicators.
+.SH AUTHORS
+Written and maintained by lumexren.

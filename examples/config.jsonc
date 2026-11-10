@@ -1,0 +1,101 @@
+{
+  // vergebar - Waybar-compatible configuration
+  "layer": "top",
+  "position": "top",
+  "margin-top": 4,
+  "margin-left": 8,
+  "margin-right": 8,
+  "spacing": 4,
+
+  "modules-left": [
+    "workspaces",
+    "cpu",
+    "memory",
+    "disk"
+  ],
+
+  "modules-center": [
+    "clock",
+    "mpris"
+  ],
+
+  "modules-right": [
+    "wireplumber",
+    "bluetooth",
+    "keyboard-state",
+    "network",
+    "battery",
+    "temperature",
+    "tray"
+  ],
+
+  // Module Configurations
+  "clock": {
+    "format": "  %H:%M:%S ・   %a %b %d",
+    "interval": 1
+  },
+
+  "cpu": {
+    "interval": 1,
+    "format": "  {usage}% ・ {max_frequency:2}GHz",
+    "warning-threshold": 70,
+    "critical-threshold": 90
+  },
+
+  "memory": {
+    "interval": 2,
+    "format": "  {percentage}%",
+    "warning-threshold": 75,
+    "critical-threshold": 90
+  },
+
+  "disk": {
+    "path": "/",
+    "interval": 10,
+    "format": "  {percentage_used}%"
+  },
+
+  "mpris": {
+    "format": "{status_icon}  {title}",
+    "format-stopped": "",
+    "max-length": 35
+  },
+
+  "wireplumber": {
+    "format": "{icon}  {volume}%",
+    "format-muted": "",
+    "scroll-step": 5
+  },
+
+  "bluetooth": {
+    "format": "",
+    "format-connected": " {device_alias}"
+  },
+
+  "keyboard-state": {
+    "format": "{icon} {layout}"
+  },
+
+  "network": {
+    "interval": 2,
+    "format": "󰤨  {ifname} ({ipaddr})"
+  },
+
+  "battery": {
+    "interval": 10,
+    "format": "{icon}  {capacity}%",
+    "format-charging": "󰂄  {capacity}%"
+  },
+
+  "temperature": {
+    "interval": 2,
+    "format": "  {temperature_c}°C",
+    "warning-threshold": 75,
+    "critical-threshold": 85
+  },
+
+  "tray": {
+    "icon-size": 16,
+    "spacing": 8
+  }
+}

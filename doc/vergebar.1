@@ -1,0 +1,84 @@
+.TH VERGEBAR 1 "2026-11-10" "vergebar" "User Commands"
+.SH NAME
+vergebar \- high-performance Wayland status bar written in Zig
+.SH SYNOPSIS
+.B vergebar
+[\fB\-c\fR \fICONFIG\fR]
+[\fB\-s\fR \fISTYLE\fR]
+[\fB\-l\fR \fILEVEL\fR]
+[\fB\-\-validate\-config\fR]
+[\fB\-\-list\-modules\fR]
+[\fB\-\-dump\-default\-config\fR]
+[\fB\-\-dump\-default\-style\fR]
+.br
+.B vergebar msg
+\fICOMMAND\fR [\fIARGS...\fR]
+.SH DESCRIPTION
+.B vergebar
+is an ultra-fast, lightweight status bar for Wayland compositors (Hyprland, Sway, River, Niri, Wayfire, Mango, KDE KWin) built on GTK4 and gtk4-layer-shell with native Waybar configuration and style support.
+.SH OPTIONS
+.TP
+\fB\-c\fR, \fB\-\-config\fR \fIFILE\fR
+Path to the JSONC configuration file. Defaults to \fI~/.config/vergebar/config.jsonc\fR or \fI~/.config/waybar/config.jsonc\fR.
+.TP
+\fB\-s\fR, \fB\-\-style\fR \fIFILE\fR
+Path to the CSS stylesheet. Defaults to \fI~/.config/vergebar/style.css\fR or \fI~/.config/waybar/style.css\fR.
+.TP
+\fB\-l\fR, \fB\-\-log\-level\fR \fILEVEL\fR
+Set log level (\fIdebug\fR, \fIinfo\fR, \fIwarn\fR, \fIerror\fR).
+.TP
+\fB\-\-validate\-config\fR
+Validate configuration syntax and module structure without launching windows.
+.TP
+\fB\-\-list\-modules\fR
+List all available built-in modules.
+.TP
+\fB\-\-dump\-default\-config\fR
+Print default embedded JSONC configuration to standard output.
+.TP
+\fB\-\-dump\-default\-style\fR
+Print default embedded CSS stylesheet to standard output.
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Print usage help and exit.
+.TP
+\fB\-\-version\fR
+Print version information and exit.
+.SH IPC COMMANDS
+The \fBmsg\fR subcommand sends instant instructions to a running vergebar daemon over a UNIX domain socket.
+.TP
+.B toggle \fR[\fIBAR\fR]
+Toggle visibility of all bars, or a specific bar by name.
+.TP
+.B hide \fR[\fIBAR\fR]
+Hide all bars or a specific bar.
+.TP
+.B show \fR[\fIBAR\fR]
+Show all bars or a specific bar.
+.TP
+.B reload\fR, \fBreload-style\fR
+Reload CSS stylesheet immediately from disk.
+.TP
+.B reload-config\fR
+Reload JSONC configuration and rebuild all bars.
+.TP
+.B signal \fINUM\fR
+Dispatch an update signal to any custom module registered with signal \fINUM\fR.
+.TP
+.B list-bars\fR
+List active bar instances with name, output, position, and visibility state.
+.TP
+.B quit\fR
+Instruct the vergebar daemon to cleanly exit.
+.SH SIGNALS
+.TP
+.B SIGUSR1
+Toggle bar visibility (hide or show).
+.TP
+.B SIGUSR2
+Reload CSS stylesheet immediately from disk.
+.TP
+.B SIGRTMIN+n
+Dispatch an immediate update trigger to any custom module listening on signal \fIn\fR.
+.SH SEE ALSO
+.BR vergebar (5)

@@ -1,0 +1,87 @@
+name: 🐛 Bug Report
+description: Report a bug or unexpected behavior in vergebar
+title: "[Bug]: "
+labels: ["bug", "needs triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting an issue! Please provide as much detail as possible to help reproduce and fix the bug.
+  - type: input
+    id: version
+    attributes:
+      label: vergebar Version
+      description: Output of `vergebar --version`
+      placeholder: "vergebar v1.0.0"
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: System & Compositor
+      description: Linux distribution, Wayland compositor (e.g. Hyprland, Sway, KDE, Niri), and GPU
+      placeholder: "Arch Linux, Hyprland 0.45.0, AMD Radeon RX 7800 XT"
+    validations:
+      required: true
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected Component or Module
+      description: Which part of vergebar is having issues?
+      options:
+        - Core / Bar / Geometry
+        - Config / JSONC Parsing
+        - CSS / GTK4 Styling
+        - Workspaces Module
+        - Tray (SNI) Module
+        - Window / Taskbar Module
+        - Wireplumber / Audio Sliders
+        - Battery / Backlight / Sliders
+        - Network / Bluetooth
+        - CPU / Memory / Disk / Temperature
+        - MPRIS / Media
+        - Custom Module
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: steps_to_reproduce
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Run `vergebar` with configuration...
+        2. Click on module...
+        3. Observe crash or incorrect display
+    validations:
+      required: true
+  - type: textarea
+    id: expected_behavior
+    attributes:
+      label: Expected Behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: config
+    attributes:
+      label: Relevant Configuration / Style
+      description: Relevant parts of your `config.jsonc` or `style.css` (if applicable)
+      render: jsonc
+    validations:
+      required: false
+  - type: textarea
+    id: logs
+    attributes:
+      label: Terminal Logs / Debug Output
+      description: Run `vergebar` in a terminal or with `G_MESSAGES_DEBUG=all vergebar` and paste the log output here.
+      render: shell
+    validations:
+      required: false

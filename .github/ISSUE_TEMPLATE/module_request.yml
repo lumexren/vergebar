@@ -1,0 +1,39 @@
+name: 📦 New Module Request
+description: Request a new native monitoring or status module for vergebar
+title: "[Module]: "
+labels: ["enhancement", "module"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Requesting a new native module? Provide details about data sources, protocol, and expected behavior.
+  - type: input
+    id: module_name
+    attributes:
+      label: Module Name
+      description: Proposed identifier for the module (e.g. `gamemode`, `sensors`, `fan`)
+      placeholder: "gamemode"
+    validations:
+      required: true
+  - type: textarea
+    id: data_source
+    attributes:
+      label: Data Source & Backend
+      description: Where does the information come from? (e.g., Linux sysfs, `/proc`, D-Bus interface, PipeWire, Netlink)
+      placeholder: "D-Bus service `org.freedesktop.GameMode` or sysfs `/sys/class/hwmon/...`"
+    validations:
+      required: true
+  - type: textarea
+    id: format_options
+    attributes:
+      label: Format Placeholders & Tooltips
+      description: What format strings or placeholders should the module support? (e.g., `{status}`, `{temp_c}`, `{rpm}`)
+    validations:
+      required: true
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use Case & Behavior
+      description: Explain how users would configure and interact with this module.
+    validations:
+      required: false
